@@ -1,7 +1,11 @@
-package kobting.friendlyminions.patches;
+package hlysine.friendlymonsters.patches;
 
 import basemod.BaseMod;
-import kobting.friendlyminions.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.enums.MonsterIntentEnum;
+import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
+import hlysine.friendlymonsters.helpers.MonsterHelper;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
@@ -14,10 +18,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
-import kobting.friendlyminions.enums.MonsterIntentEnum;
-import kobting.friendlyminions.helpers.BasePlayerMinionHelper;
-import kobting.friendlyminions.helpers.MonsterHelper;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
 
 /*
  * All of these are checking against AbstractPlayerWithMinions to avoid double calling of those if

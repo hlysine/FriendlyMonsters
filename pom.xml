@@ -2,69 +2,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>friendlyminions</groupId>
-    <artifactId>FriendlyMinions</artifactId>
-    <version>0.1.2</version>
+    <groupId>friendlymonsters</groupId>
+    <artifactId>FriendlyMonsters</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>FriendlyMinions</name>
-    <description>Slay the Spire mod that adds the ability to make characters with friendly minions</description>
+    <name>FriendlyMonsters</name>
+    <description>Library for spawning friendly monsters in Modded Slay the Spire.</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <SlayTheSpire.version>03-07-2022</SlayTheSpire.version>
+        <ModTheSpire.version>3.27.0</ModTheSpire.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <Dependencies.path>D:\Games\SteamLibrary\steamapps\workshop\content\646570</Dependencies.path>
+        <Game.path>D:\Games\SteamLibrary\steamapps\common\SlayTheSpire</Game.path>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.megacrit.cardcrawl</groupId>
             <artifactId>slaythespire</artifactId>
-            <version>017</version>
+            <version>${SlayTheSpire.version}</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../lib/desktop-1.0.jar</systemPath>
+            <systemPath>${Game.path}/desktop-1.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.evacipated.cardcrawl</groupId>
-            <artifactId>ModTheSpire</artifactId>
-            <version>3.0.0</version>
+            <artifactId>modthespire</artifactId>
+            <version>${ModTheSpire.version}</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../lib/ModTheSpire.jar</systemPath>
+            <systemPath>${Dependencies.path}\1605060445\ModTheSpire.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.evacipated.cardcrawl</groupId>
-            <artifactId>BaseMod</artifactId>
-            <version>3.0.0</version>
+            <groupId>basemod</groupId>
+            <artifactId>basemod</artifactId>
+            <version>5.41.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../lib/BaseMod.jar</systemPath>
+            <systemPath>${Dependencies.path}\1605833019\BaseMod.jar</systemPath>
         </dependency>
-
     </dependencies>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
     <build>
-        <finalName>FriendlyMinions</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.2</version>
-                <executions>
-                    <execution>
-                        <id>FriendlyMinions</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>friendlyminions:FriendlyMinions</artifact>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.psd</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -74,7 +66,9 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <copy file="target/FriendlyMinions.jar" tofile="../_ModTheSpire/mods/FriendlyMinions.jar"/>
+                                <!-- This moves your mod into a common folder where all mods you make can go. -->
+                                <copy file="target/${project.artifactId}.jar"
+                                      tofile="${Game.path}/mods/${project.artifactId}.jar"/>
                             </target>
                         </configuration>
                         <goals>
@@ -83,7 +77,35 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>ModTheSpire.json</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>ModTheSpire.json</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>

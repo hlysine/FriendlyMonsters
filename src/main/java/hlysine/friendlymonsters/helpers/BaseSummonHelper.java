@@ -1,8 +1,8 @@
-package kobting.friendlyminions.helpers;
+package hlysine.friendlymonsters.helpers;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import kobting.friendlyminions.characters.AbstractPlayerWithMinions;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 
 public class BaseSummonHelper {
 

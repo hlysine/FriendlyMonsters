@@ -1,4 +1,4 @@
-package kobting.friendlyminions.characters;
+package hlysine.friendlymonsters.characters;
 
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.AbstractAnimation;
@@ -10,11 +10,10 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
-import kobting.friendlyminions.enums.MonsterIntentEnum;
-import kobting.friendlyminions.helpers.MonsterHelper;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.enums.MonsterIntentEnum;
+import hlysine.friendlymonsters.helpers.MonsterHelper;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class AbstractPlayerWithMinions extends CustomPlayer{

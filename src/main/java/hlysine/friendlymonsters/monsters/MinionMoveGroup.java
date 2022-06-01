@@ -1,17 +1,12 @@
-package kobting.friendlyminions.monsters;
+package hlysine.friendlymonsters.monsters;
 
-import basemod.ClickableUIElement;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.TipHelper;
-import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 public class MinionMoveGroup {
 

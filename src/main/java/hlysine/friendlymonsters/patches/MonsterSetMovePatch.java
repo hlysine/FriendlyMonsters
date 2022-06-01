@@ -1,16 +1,15 @@
-package kobting.friendlyminions.patches;
+package hlysine.friendlymonsters.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
-import kobting.friendlyminions.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.enums.MonsterIntentEnum;
+import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
+import hlysine.friendlymonsters.helpers.MinionConfigHelper;
+import hlysine.friendlymonsters.helpers.MonsterHelper;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
-import kobting.friendlyminions.enums.MonsterIntentEnum;
-import kobting.friendlyminions.helpers.BasePlayerMinionHelper;
-import kobting.friendlyminions.helpers.MinionConfigHelper;
-import kobting.friendlyminions.helpers.MonsterHelper;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
 
 import java.lang.reflect.Field;
 

@@ -1,10 +1,9 @@
-package kobting.friendlyminions.patches;
+package hlysine.friendlymonsters.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 
 @SpirePatch(
         cls = "com.megacrit.cardcrawl.characters.AbstractPlayer",

@@ -1,4 +1,4 @@
-package kobting.friendlyminions.patches;
+package hlysine.friendlymonsters.patches;
 
 
 import com.badlogic.gdx.Gdx;
@@ -6,13 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.events.AbstractEvent;
-import com.megacrit.cardcrawl.events.city.CursedTome;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -23,17 +18,14 @@ import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.DebuffParticleEffect;
 import com.megacrit.cardcrawl.vfx.ShieldParticleEffect;
 import com.megacrit.cardcrawl.vfx.combat.BuffParticleEffect;
-import javafx.scene.paint.Color;
+import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.enums.MonsterIntentEnum;
+import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
+import hlysine.friendlymonsters.helpers.MonsterHelper;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
-import kobting.friendlyminions.cards.MonsterCard;
-import kobting.friendlyminions.characters.AbstractPlayerWithMinions;
-import kobting.friendlyminions.enums.MonsterIntentEnum;
-import kobting.friendlyminions.helpers.BasePlayerMinionHelper;
-import kobting.friendlyminions.helpers.MonsterHelper;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
 
-import javax.swing.text.AbstractDocument;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

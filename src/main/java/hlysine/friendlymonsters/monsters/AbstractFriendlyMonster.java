@@ -1,13 +1,13 @@
-package kobting.friendlyminions.monsters;
+package hlysine.friendlymonsters.monsters;
 
 import com.megacrit.cardcrawl.core.Settings;
-import kobting.friendlyminions.characters.AbstractPlayerWithMinions;
+import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.TintEffect;
-import kobting.friendlyminions.helpers.BasePlayerMinionHelper;
+import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
 
 public abstract class AbstractFriendlyMonster extends AbstractMonster {
 

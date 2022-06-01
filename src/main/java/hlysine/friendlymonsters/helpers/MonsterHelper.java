@@ -1,9 +1,9 @@
-package kobting.friendlyminions.helpers;
+package hlysine.friendlymonsters.helpers;
 
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import kobting.friendlyminions.enums.MonsterIntentEnum;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
-import kobting.friendlyminions.patches.MonsterAddFieldsPatch;
+import hlysine.friendlymonsters.enums.MonsterIntentEnum;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.patches.MonsterAddFieldsPatch;
 
 public class MonsterHelper {
 

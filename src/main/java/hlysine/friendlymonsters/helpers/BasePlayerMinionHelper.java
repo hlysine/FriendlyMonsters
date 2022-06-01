@@ -1,9 +1,9 @@
-package kobting.friendlyminions.helpers;
+package hlysine.friendlymonsters.helpers;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
-import kobting.friendlyminions.patches.PlayerAddFieldsPatch;
+import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.patches.PlayerAddFieldsPatch;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package kobting.friendlyminions.helpers;
+package hlysine.friendlymonsters.helpers;
 
 public class MinionConfigHelper {
 

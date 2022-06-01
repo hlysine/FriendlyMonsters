@@ -1,4 +1,4 @@
-package kobting.friendlyminions.monsters;
+package hlysine.friendlymonsters.monsters;
 
 import basemod.BaseMod;
 import basemod.ClickableUIElement;
