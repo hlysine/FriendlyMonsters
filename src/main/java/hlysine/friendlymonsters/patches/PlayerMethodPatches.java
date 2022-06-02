@@ -4,8 +4,7 @@ import basemod.BaseMod;
 import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
 import hlysine.friendlymonsters.enums.MonsterIntentEnum;
 import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
-import hlysine.friendlymonsters.helpers.MonsterHelper;
-import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.utils.MonsterIntentUtils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
@@ -56,10 +55,10 @@ public class PlayerMethodPatches {
                 // todo: check if the targeted minion is still alive
                 if (attackingMonster && PlayerAddFieldsPatch.f_minions.get(_instance).monsters.size() > 0) {
                     //damageFriendlyMonster(info);
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterHelper.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterIntentUtils.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
                     return SpireReturn.Return();
                 } else if (attackingMonster) {
-                    MonsterHelper.switchTarget((AbstractMonster) info.owner, null);
+                    MonsterIntentUtils.switchTarget((AbstractMonster) info.owner, null);
                     info.applyPowers(info.owner, _instance);
                     return SpireReturn.Continue();
                 } else {

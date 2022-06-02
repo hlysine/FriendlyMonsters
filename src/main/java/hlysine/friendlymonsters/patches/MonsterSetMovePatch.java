@@ -5,7 +5,7 @@ import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
 import hlysine.friendlymonsters.enums.MonsterIntentEnum;
 import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
 import hlysine.friendlymonsters.MinionConfig;
-import hlysine.friendlymonsters.helpers.MonsterHelper;
+import hlysine.friendlymonsters.utils.MonsterIntentUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -60,7 +60,7 @@ public class MonsterSetMovePatch {
 
 
             } else {
-                MonsterHelper.setTarget(monster, null);
+                MonsterIntentUtils.setTarget(monster, null);
             }
 
             System.out.println("-------- End Change Intent -------------");

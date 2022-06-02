@@ -17,13 +17,10 @@ public class MonsterIntentEnum {
     @SpireEnum
     public static AbstractMonster.Intent ATTACK_MINION_DEFEND;
 
-    @SpireEnum
-    public static AbstractMonster.Intent DEBUFF_MONSTER;
-
-    @SpireEnum
-    public static AbstractMonster.Intent STRONG_DEBUFF_MONSTER;
-
-    @SpireEnum
-    public static AbstractMonster.Intent DEFEND_DEBUFF_MONSTER;
-
+    public static boolean isMinionIntent(AbstractMonster.Intent intent) {
+        return intent == MonsterIntentEnum.ATTACK_MINION
+                || intent == MonsterIntentEnum.ATTACK_MINION_BUFF
+                || intent == MonsterIntentEnum.ATTACK_MINION_DEBUFF
+                || intent == MonsterIntentEnum.ATTACK_MINION_DEFEND;
+    }
 }

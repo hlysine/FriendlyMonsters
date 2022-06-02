@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import hlysine.friendlymonsters.enums.MonsterIntentEnum;
-import hlysine.friendlymonsters.helpers.MonsterHelper;
+import hlysine.friendlymonsters.utils.MonsterIntentUtils;
 import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 
 import java.util.Objects;
@@ -66,11 +66,11 @@ public abstract class AbstractPlayerWithMinions extends CustomPlayer{
         }
 
         if(attackingMonster && minions.monsters.size() > 0) {
-            AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterHelper.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
+            AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterIntentUtils.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
             //damageFriendlyMonster(info);
         }
         else if(attackingMonster && minions.monsters.size() <= 0) {
-            MonsterHelper.switchTarget((AbstractMonster) info.owner, null);
+            MonsterIntentUtils.switchTarget((AbstractMonster) info.owner, null);
             info.applyPowers(info.owner, this);
             super.damage(info);
         }
