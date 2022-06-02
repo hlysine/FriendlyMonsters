@@ -30,7 +30,7 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.characters.AbstractPlayer",
             method = "initializeClass"
     )
-    public static class InitializePatch{
+    public static class InitializePatch {
 
         public static void Prefix(AbstractPlayer _instance) {
             BasePlayerMinionHelper.clearMinions(_instance);
@@ -43,21 +43,24 @@ public class PlayerMethodPatches {
             method = "damage",
             paramtypes = {"com.megacrit.cardcrawl.cards.DamageInfo"}
     )
-    public static class DamagePatch{
+    public static class DamagePatch {
 
-        //TODO make this logic match logic of damage in AbstractPlayerWithMinions
-        public static SpireReturn Prefix(AbstractPlayer _instance, DamageInfo info) {
-            if(!(_instance instanceof AbstractPlayerWithMinions)) {
+        public static SpireReturn<Void> Prefix(AbstractPlayer _instance, DamageInfo info) {
+            if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 AbstractMonster owner;
                 boolean attackingMonster = false;
                 if (info.owner instanceof AbstractMonster) {
                     owner = (AbstractMonster) info.owner;
-                    attackingMonster = checkAttackMonsterIntent(owner.intent);
+                    attackingMonster = isAttackingMinion(owner.intent);
                 }
-                if (attackingMonster) {
+                if (attackingMonster && PlayerAddFieldsPatch.f_minions.get(_instance).monsters.size() > 0) {
                     //damageFriendlyMonster(info);
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterHelper.getTarget((AbstractMonster)info.owner), info, AbstractGameAction.AttackEffect.NONE));
-                    return SpireReturn.Return(null);
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterHelper.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
+                    return SpireReturn.Return();
+                } else if (attackingMonster) {
+                    MonsterHelper.switchTarget((AbstractMonster) info.owner, null);
+                    info.applyPowers(info.owner, _instance);
+                    return SpireReturn.Continue();
                 } else {
                     return SpireReturn.Continue();
                 }
@@ -65,31 +68,12 @@ public class PlayerMethodPatches {
             return SpireReturn.Continue();
         }
 
-        private static boolean checkAttackMonsterIntent(AbstractMonster.Intent intent) {
-
-            if(intent == MonsterIntentEnum.ATTACK_MINION
+        private static boolean isAttackingMinion(AbstractMonster.Intent intent) {
+            return intent == MonsterIntentEnum.ATTACK_MINION
                     || intent == MonsterIntentEnum.ATTACK_MINION_BUFF
                     || intent == MonsterIntentEnum.ATTACK_MINION_DEBUFF
-                    || intent == MonsterIntentEnum.ATTACK_MINION_DEFEND) {
-
-                return true;
-            }
-
-            return false;
-
+                    || intent == MonsterIntentEnum.ATTACK_MINION_DEFEND;
         }
-
-        private static void damageFriendlyMonster(DamageInfo info){
-
-            MonsterGroup minions;
-            minions = PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player);
-
-            int randomMinionIndex = AbstractDungeon.aiRng.random(minions.monsters.size() - 1);
-            AbstractFriendlyMonster minion = (AbstractFriendlyMonster) PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.get(randomMinionIndex);
-            info.applyPowers(info.owner, minion);
-            AbstractDungeon.actionManager.addToBottom(new DamageAction(PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.get(randomMinionIndex), info, AbstractGameAction.AttackEffect.NONE));
-        }
-
     }
 
     @SpirePatch(
@@ -97,19 +81,19 @@ public class PlayerMethodPatches {
             method = "render",
             paramtypes = {"com.badlogic.gdx.graphics.g2d.SpriteBatch"}
     )
-    public static class RenderPatch{
+    public static class RenderPatch {
 
         public static void Prefix(AbstractPlayer _instance, SpriteBatch sb) {
 
-            if(!(_instance instanceof AbstractPlayerWithMinions)) {
+            if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 MonsterGroup minions;
                 minions = PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player);
 
-                if(AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
+                if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
                     if (AbstractDungeon.getCurrRoom() != null) {
                         switch (AbstractDungeon.getCurrRoom().phase) {
                             case COMBAT:
-                                if(BasePlayerMinionHelper.hasMinions(AbstractDungeon.player))
+                                if (BasePlayerMinionHelper.hasMinions(AbstractDungeon.player))
                                     minions.render(sb);
                                 break;
                         }
@@ -124,20 +108,20 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.characters.AbstractPlayer",
             method = "update"
     )
-    public static class UpdatePatch{
+    public static class UpdatePatch {
 
         public static void Postfix(AbstractPlayer _instance) {
 
-            if(!(_instance instanceof AbstractPlayerWithMinions)) {
+            if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 MonsterGroup minions;
                 minions = PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player);
 
 
                 if (AbstractDungeon.getCurrRoom() != null) {
-                    if(AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
+                    if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
                         switch (AbstractDungeon.getCurrRoom().phase) {
                             case COMBAT:
-                                if(BasePlayerMinionHelper.hasMinions(AbstractDungeon.player))
+                                if (BasePlayerMinionHelper.hasMinions(AbstractDungeon.player))
                                     minions.update();
                                 break;
                         }
@@ -152,11 +136,11 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.characters.AbstractPlayer",
             method = "preBattlePrep"
     )
-    public static class PreBattlePatch{
+    public static class PreBattlePatch {
 
         public static void Postfix(AbstractPlayer _instance) {
 
-            if(!(_instance instanceof AbstractPlayerWithMinions)) {
+            if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 BasePlayerMinionHelper.changeMaxMinionAmount(_instance, PlayerAddFieldsPatch.f_baseMinions.get(_instance));
                 BasePlayerMinionHelper.clearMinions(_instance);
             }
@@ -164,14 +148,14 @@ public class PlayerMethodPatches {
 
     }
 
-   @SpirePatch(
+    @SpirePatch(
             cls = "com.megacrit.cardcrawl.core.AbstractCreature",
             method = "applyEndOfTurnTriggers"
     )
-    public static class EndOfTurnPatch{
+    public static class EndOfTurnPatch {
 
         public static void Postfix(AbstractCreature _instance) {
-            if((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
+            if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 BaseMod.logger.info("----------- Minion Before Attacking --------------");
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
                     monster.takeTurn();
@@ -191,10 +175,10 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.core.AbstractCreature",
             method = "applyTurnPowers"
     )
-    public static class ApplyTurnPowersPatch{
+    public static class ApplyTurnPowersPatch {
 
         public static void Postfix(AbstractCreature _instance) {
-            if((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
+            if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyTurnPowers());
             }
         }
@@ -205,10 +189,10 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.core.AbstractCreature",
             method = "applyStartOfTurnPostDrawPowers"
     )
-    public static class ApplyStartOfTurnPostDrawPowersPatch{
+    public static class ApplyStartOfTurnPostDrawPowersPatch {
 
         public static void Postfix(AbstractCreature _instance) {
-            if((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
+            if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPostDrawPowers());
             }
         }
@@ -219,10 +203,10 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.core.AbstractCreature",
             method = "applyStartOfTurnPowers"
     )
-    public static class ApplyStartOfTurnPowersPatch{
+    public static class ApplyStartOfTurnPowersPatch {
 
         public static void Postfix(AbstractCreature _instance) {
-            if((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
+            if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPowers());
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.loseBlock());
             }
@@ -234,10 +218,10 @@ public class PlayerMethodPatches {
             cls = "com.megacrit.cardcrawl.core.AbstractCreature",
             method = "updatePowers"
     )
-    public static class UpdatePowersPatch{
+    public static class UpdatePowersPatch {
 
         public static void Postfix(AbstractCreature _instance) {
-            if((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
+            if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.updatePowers());
             }
         }
