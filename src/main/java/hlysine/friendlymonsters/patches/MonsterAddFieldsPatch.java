@@ -2,14 +2,16 @@ package hlysine.friendlymonsters.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 
 @SpirePatch(
-        cls = "com.megacrit.cardcrawl.monsters.AbstractMonster",
+        clz = AbstractMonster.class,
         method = SpirePatch.CLASS
 )
 public class MonsterAddFieldsPatch {
-
-    public static SpireField<AbstractFriendlyMonster> f_target = new SpireField<>(()-> null);
-
+    /**
+     * The minion that this monster intends to attack this turn. Set to null to attack the player.
+     */
+    public static SpireField<AbstractFriendlyMonster> fm_attackTarget = new SpireField<>(() -> null);
 }

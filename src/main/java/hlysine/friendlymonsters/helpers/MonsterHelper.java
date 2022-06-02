@@ -8,11 +8,11 @@ import hlysine.friendlymonsters.patches.MonsterAddFieldsPatch;
 public class MonsterHelper {
 
     public static void setTarget(AbstractMonster monster, AbstractFriendlyMonster target) {
-        MonsterAddFieldsPatch.f_target.set(monster, target);
+        MonsterAddFieldsPatch.fm_attackTarget.set(monster, target);
     }
 
     public static AbstractFriendlyMonster getTarget(AbstractMonster monster) {
-        return MonsterAddFieldsPatch.f_target.get(monster);
+        return MonsterAddFieldsPatch.fm_attackTarget.get(monster);
     }
 
 

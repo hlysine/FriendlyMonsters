@@ -53,6 +53,7 @@ public class PlayerMethodPatches {
                     owner = (AbstractMonster) info.owner;
                     attackingMonster = isAttackingMinion(owner.intent);
                 }
+                // todo: check if the targeted minion is still alive
                 if (attackingMonster && PlayerAddFieldsPatch.f_minions.get(_instance).monsters.size() > 0) {
                     //damageFriendlyMonster(info);
                     AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterHelper.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
