@@ -4,7 +4,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
 import hlysine.friendlymonsters.enums.MonsterIntentEnum;
 import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
-import hlysine.friendlymonsters.helpers.MinionConfigHelper;
+import hlysine.friendlymonsters.MinionConfig;
 import hlysine.friendlymonsters.helpers.MonsterHelper;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -48,7 +48,7 @@ public class MonsterSetMovePatch {
         try {
             System.out.println("--------- Maybe Change Intent -----------");
 
-            if(AbstractDungeon.aiRng.randomBoolean(MinionConfigHelper.MinionAttackTargetChance)) {
+            if(AbstractDungeon.aiRng.randomBoolean(MinionConfig.MinionAttackTargetChance)) {
 
                 System.out.println("-------- Changing Intent -----------");
 
