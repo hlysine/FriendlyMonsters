@@ -40,21 +40,48 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
     }
 
     public AbstractAnimation animation;
+    /**
+     * Whether to render the corpse image instead of the minion model.
+     */
     public boolean renderCorpse = false;
+    /**
+     * The scale of the minion. Only affects static image rendering.
+     */
     public float scale = 1.0f;
+    /**
+     * The image to render for this minion when the player dies.
+     * The minion will appear to remain alive if this is null.
+     */
     public Texture corpseImg = null;
 
+    /**
+     * The X position that this minion should be moving to.
+     */
     public float target_x;
+    /**
+     * The Y position that this minion should be moving to.
+     */
     public float target_y;
 
+    /**
+     * The minion moves selectable by the player.
+     * <p>
+     * Every turn, the player can select 1 move out of all the moves listed in this group.
+     */
     protected MinionMoveGroup moves;
+    /**
+     * The images to use for attack intents of an enemy monster if it is targeting this minion.
+     * <p>
+     * Must contain 7 elements for this to work. Otherwise, the generic minion attack intent will be used.
+     */
     protected Texture[] attackIntents;
     private boolean takenTurn = false;
 
-    public AnimationStateData getStateData() {
-        return this.stateData;
-    }
-
+    /**
+     * Create a new {@link AbstractFriendlyMonster} instance.
+     *
+     * @param imgUrl If the minion uses a static image, the path to the image. Use null if the minion is animated.
+     */
     public AbstractFriendlyMonster(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY) {
         super(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, null, offsetX, offsetY);
         if (imgUrl != null) {
@@ -66,6 +93,11 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
         target_y = drawY;
     }
 
+    /**
+     * Create a new {@link AbstractFriendlyMonster} instance.
+     *
+     * @param imgUrl If the minion uses a static image, the path to the image. Use null if the minion is animated.
+     */
     public AbstractFriendlyMonster(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY, Texture[] attackIntents) {
         this(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, imgUrl, offsetX, offsetY);
         this.attackIntents = attackIntents;
@@ -130,6 +162,9 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
     protected void getMove(int i) {
     }
 
+    /**
+     * Kill this minion, trigger its powers and play the death animation.
+     */
     @Override
     public void die() {
         die(true);
@@ -163,6 +198,12 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
         }
     }
 
+    /**
+     * Load the animation for this minion. {@link SpineAnimation},
+     * {@link basemod.animations.G3DJAnimation} and {@link basemod.animations.SpriterAnimation} are all supported.
+     *
+     * @param animation The animation to be loaded.
+     */
     protected void loadAnimation(AbstractAnimation animation) {
         this.animation = animation;
         if (animation instanceof SpineAnimation) {
@@ -179,6 +220,13 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
         }
     }
 
+    public AnimationStateData getStateData() {
+        return this.stateData;
+    }
+
+    /**
+     * Show the corpse image of the minion when the player dies.
+     */
     public void playDeathAnimation() {
         if (this.corpseImg != null) {
             this.img = this.corpseImg;

@@ -17,6 +17,12 @@ public class MonsterIntentEnum {
     @SpireEnum
     public static AbstractMonster.Intent ATTACK_MINION_DEFEND;
 
+    /**
+     * Check whether the intent is targeting a minion.
+     *
+     * @param intent The intent to check.
+     * @return True if the intent targets a minion.
+     */
     public static boolean isMinionIntent(AbstractMonster.Intent intent) {
         return intent == MonsterIntentEnum.ATTACK_MINION
                 || intent == MonsterIntentEnum.ATTACK_MINION_BUFF
