@@ -12,6 +12,30 @@ public class MinionUtils {
         return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player);
     }
 
+    public static AbstractFriendlyMonster getMinion(AbstractPlayer player, String minionId) {
+        return (AbstractFriendlyMonster) PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).getMonster(minionId);
+    }
+
+    public static boolean removeMinion(AbstractPlayer player, AbstractFriendlyMonster minionToRemove) {
+        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).monsters.remove(minionToRemove);
+    }
+
+    public static boolean hasMinions(AbstractPlayer player) {
+        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).monsters.size() > 0;
+    }
+
+    public static boolean hasMinion(AbstractPlayer player, String minionId) {
+        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).monsters.stream().anyMatch(m -> m.id.equals(minionId));
+    }
+
+    public static void clearMinions(AbstractPlayer player) {
+        PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.set(player, new MonsterGroup(new AbstractFriendlyMonster[]{}));
+    }
+
+    public static AbstractMonster getRandomMinion(AbstractPlayer player, boolean aliveOnly) {
+        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).getRandomMonster(null, aliveOnly, AbstractDungeon.aiRng);
+    }
+
     public static int getMaxMinionCount(AbstractPlayer player) {
         return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_maxMinionCount.get(player);
     }
@@ -96,21 +120,5 @@ public class MinionUtils {
             minions.add(minionToAdd);
             return true;
         }
-    }
-
-    public static boolean removeMinion(AbstractPlayer player, AbstractFriendlyMonster minionToRemove) {
-        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).monsters.remove(minionToRemove);
-    }
-
-    public static boolean hasMinions(AbstractPlayer player) {
-        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).monsters.size() > 0;
-    }
-
-    public static void clearMinions(AbstractPlayer player) {
-        PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.set(player, new MonsterGroup(new AbstractFriendlyMonster[]{}));
-    }
-
-    public static AbstractMonster getRandomMinion(AbstractPlayer player, boolean aliveOnly) {
-        return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minions.get(player).getRandomMonster(null, aliveOnly, AbstractDungeon.aiRng);
     }
 }

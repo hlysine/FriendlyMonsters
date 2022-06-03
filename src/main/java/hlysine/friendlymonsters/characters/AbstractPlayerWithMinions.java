@@ -2,210 +2,109 @@ package hlysine.friendlymonsters.characters;
 
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.AbstractAnimation;
-import basemod.animations.G3DJAnimation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
-import hlysine.friendlymonsters.enums.MonsterIntentEnum;
-import hlysine.friendlymonsters.utils.MonsterIntentUtils;
+import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
+import hlysine.friendlymonsters.utils.MinionUtils;
 
-import java.util.Objects;
-
-public abstract class AbstractPlayerWithMinions extends CustomPlayer{
-
-    public MonsterGroup minions;
-    private AbstractFriendlyMonster[] p_minions;
-    private int maxMinions;
-    private int baseMinions;
-
+public abstract class AbstractPlayerWithMinions extends CustomPlayer {
     public AbstractPlayerWithMinions(String name, PlayerClass playerClass, String[] orbTextures, String orbVfxPath, String model, String animation) {
-        this(name, playerClass, orbTextures, orbVfxPath, (float[])null, model, animation);
+        super(name, playerClass, orbTextures, orbVfxPath, model, animation);
+    }
+
+    public AbstractPlayerWithMinions(String name, PlayerClass playerClass, EnergyOrbInterface energyOrbInterface, String model, String animation) {
+        super(name, playerClass, energyOrbInterface, model, animation);
     }
 
     public AbstractPlayerWithMinions(String name, PlayerClass playerClass, String[] orbTextures, String orbVfxPath, float[] layerSpeeds, String model, String animation) {
-        this(name, playerClass, orbTextures, orbVfxPath, (float[])layerSpeeds, (AbstractAnimation)(new G3DJAnimation(model, animation)));
+        super(name, playerClass, orbTextures, orbVfxPath, layerSpeeds, model, animation);
     }
 
     public AbstractPlayerWithMinions(String name, PlayerClass playerClass, String[] orbTextures, String orbVfxPath, AbstractAnimation animation) {
-        this(name, playerClass, orbTextures, orbVfxPath, (float[])null, (AbstractAnimation)animation);
+        super(name, playerClass, orbTextures, orbVfxPath, animation);
     }
 
     public AbstractPlayerWithMinions(String name, PlayerClass playerClass, String[] orbTextures, String orbVfxPath, float[] layerSpeeds, AbstractAnimation animation) {
         super(name, playerClass, orbTextures, orbVfxPath, layerSpeeds, animation);
-        this.baseMinions = this.getInfo().maxMinions;
-        this.maxMinions = this.baseMinions;
-        clearMinions();
     }
 
-
-    @Override
-    public void preBattlePrep() {
-        super.preBattlePrep();
-        this.maxMinions = this.baseMinions;
-        clearMinions();
+    public AbstractPlayerWithMinions(String name, PlayerClass playerClass, EnergyOrbInterface energyOrbInterface, AbstractAnimation animation) {
+        super(name, playerClass, energyOrbInterface, animation);
     }
 
-    @Override
-    public void applyStartOfTurnRelics() {
-        super.applyStartOfTurnRelics();
-    }
-
-    @Override
-    public void damage(DamageInfo info) {
-
-        AbstractMonster owner;
-        boolean attackingMonster = false;
-        if(info.owner instanceof AbstractMonster) {
-            owner = (AbstractMonster) info.owner;
-            attackingMonster = checkAttackMonsterIntent(owner.intent);
-        }
-
-        if(attackingMonster && minions.monsters.size() > 0) {
-            AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterIntentUtils.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
-            //damageFriendlyMonster(info);
-        }
-        else if(attackingMonster && minions.monsters.size() <= 0) {
-            MonsterIntentUtils.switchTarget((AbstractMonster) info.owner, null);
-            info.applyPowers(info.owner, this);
-            super.damage(info);
-        }
-        else {
-            super.damage(info);
-        }
-
-    }
-
-    public abstract CustomCharSelectInfo getInfo();
-
-    public int getMaxMinions(){
-        return this.maxMinions;
-    }
-
-    @Override
-    public void applyEndOfTurnTriggers() {
-        super.applyEndOfTurnTriggers();
-        this.minions.monsters.forEach(minion -> minion.applyEndOfTurnTriggers());
-        this.minions.monsters.forEach(minion -> minion.powers.forEach(power -> power.atEndOfRound()));
-    }
-
-    @Override
-    public void applyStartOfTurnPostDrawPowers() {
-        super.applyStartOfTurnPostDrawPowers();
-        this.minions.monsters.forEach(minion -> minion.applyStartOfTurnPostDrawPowers());
-    }
-
-    @Override
-    public void applyStartOfTurnPowers() {
-        super.applyStartOfTurnPowers();
-        this.minions.monsters.forEach(minion -> minion.applyStartOfTurnPowers());
-        this.minions.monsters.forEach(minion -> minion.loseBlock());
-    }
-
-    @Override
-    public void applyTurnPowers() {
-        super.applyTurnPowers();
-        this.minions.monsters.forEach(minion -> minion.applyTurnPowers());
-    }
-
-    @Override
-    public void updatePowers() {
-        super.updatePowers();
-        this.minions.monsters.forEach(minion -> minion.updatePowers());
-    }
-
-    @Override
-    public void render(SpriteBatch sb) {
-        super.render(sb);
-        if(AbstractDungeon.getCurrRoom() != null){
-            switch (AbstractDungeon.getCurrRoom().phase) {
-                case COMBAT:
-                    minions.render(sb);
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        if(AbstractDungeon.getCurrRoom() != null) {
-            switch (AbstractDungeon.getCurrRoom().phase) {
-                case COMBAT:
-                    minions.update();
-                    break;
-            }
-        }
-    }
-
-
-    public void changeMaxMinionAmount(int newAmount) {
-        this.maxMinions = newAmount;
-    }
-
-    public boolean hasMinion(String minionID) {
-        for(AbstractMonster m : minions.monsters) {
-            if(((AbstractFriendlyMonster)m).id.equals(minionID)) {
-                return true;
-            }
-        }
-        return false;
+    public MonsterGroup getMinions() {
+        return MinionUtils.getMinions(this);
     }
 
     public AbstractFriendlyMonster getMinion(String minionID) {
-        return (AbstractFriendlyMonster) minions.getMonster(minionID);
+        return MinionUtils.getMinion(this, minionID);
     }
-
-    public boolean addMinion(AbstractFriendlyMonster minion){
-        if(minions.monsters.size() == maxMinions) {
-            return false;
-        } else {
-            minion.init();
-            minion.usePreBattleAction();
-            //minion.useUniversalPreBattleAction(); //This might be causing blights to effect minions
-            minion.showHealthBar();
-            minions.add(minion);
-            return true;
-        }
-    }
-
-
-    public boolean removeMinion(AbstractFriendlyMonster minion) {
-        return minions.monsters.remove(minion);
-    }
-
-    public void clearMinions(){
-        p_minions = new AbstractFriendlyMonster[this.maxMinions];
-        minions = new MonsterGroup(p_minions);
-        minions.monsters.removeIf(Objects::isNull);
-    }
-
-
-    private boolean checkAttackMonsterIntent(AbstractMonster.Intent intent) {
-
-        if(intent == MonsterIntentEnum.ATTACK_MINION
-                || intent == MonsterIntentEnum.ATTACK_MINION_BUFF
-                || intent == MonsterIntentEnum.ATTACK_MINION_DEBUFF
-                || intent == MonsterIntentEnum.ATTACK_MINION_DEFEND) {
-
-            return true;
-        }
-
-        return false;
-
-    }
-
 
     public boolean hasMinions() {
-        return minions.monsters.size() > 0;
+        return MinionUtils.hasMinions(this);
     }
 
-    public MonsterGroup getMinions(){
-        return minions;
+    public boolean hasMinion(String minionId) {
+        return MinionUtils.hasMinion(this, minionId);
     }
 
+    public boolean addMinion(AbstractFriendlyMonster minion) {
+        return MinionUtils.addMinion(this, minion);
+    }
+
+    public boolean removeMinion(AbstractFriendlyMonster minion) {
+        return MinionUtils.removeMinion(this, minion);
+    }
+
+    public void clearMinions() {
+        MinionUtils.clearMinions(this);
+    }
+
+    public int getBaseMinionCount() {
+        return MinionUtils.getBaseMinionCount(this);
+    }
+
+    public void setBaseMinionCount(int newVal) {
+        MinionUtils.setBaseMinionCount(this, newVal);
+    }
+
+    public int getMaxMinionCount() {
+        return MinionUtils.getMaxMinionCount(this);
+    }
+
+    public void setMaxMinionCount(int newVal) {
+        MinionUtils.setMaxMinionCount(this, newVal);
+    }
+
+    public float getBaseMinionPowerChance() {
+        return MinionUtils.getBaseMinionPowerChance(this);
+    }
+
+    public void setBaseMinionPowerChance(float newVal) {
+        MinionUtils.setBaseMinionPowerChance(this, newVal);
+    }
+
+    public float getMinionPowerChance() {
+        return MinionUtils.getMinionPowerChance(this);
+    }
+
+    public void setMinionPowerChance(float newVal) {
+        MinionUtils.setMinionPowerChance(this, newVal);
+    }
+
+    public float getBaseMinionAttackTargetChance() {
+        return MinionUtils.getBaseMinionAttackTargetChance(this);
+    }
+
+    public void setBaseMinionAttackTargetChance(float newVal) {
+        MinionUtils.setBaseMinionAttackTargetChance(this, newVal);
+    }
+
+    public float getMinionAttackTargetChance() {
+        return MinionUtils.getMinionAttackTargetChance(this);
+    }
+
+    public void setMinionAttackTargetChance(float newVal) {
+        MinionUtils.setMinionAttackTargetChance(this, newVal);
+    }
 }
