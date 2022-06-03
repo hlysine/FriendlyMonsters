@@ -53,7 +53,7 @@ public class PlayerMethodPatches {
                     attackingMonster = isAttackingMinion(owner.intent);
                 }
                 // todo: check if the targeted minion is still alive
-                if (attackingMonster && PlayerAddFieldsPatch.f_minions.get(_instance).monsters.size() > 0) {
+                if (attackingMonster && PlayerAddSavableFieldsPatch.f_minions.get(_instance).monsters.size() > 0) {
                     //damageFriendlyMonster(info);
                     AbstractDungeon.actionManager.addToBottom(new DamageAction(MonsterIntentUtils.getTarget((AbstractMonster) info.owner), info, AbstractGameAction.AttackEffect.NONE));
                     return SpireReturn.Return();
@@ -87,7 +87,7 @@ public class PlayerMethodPatches {
 
             if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 MonsterGroup minions;
-                minions = PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player);
+                minions = PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player);
 
                 if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
                     if (AbstractDungeon.getCurrRoom() != null) {
@@ -114,7 +114,7 @@ public class PlayerMethodPatches {
 
             if (!(_instance instanceof AbstractPlayerWithMinions)) {
                 MonsterGroup minions;
-                minions = PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player);
+                minions = PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player);
 
 
                 if (AbstractDungeon.getCurrRoom() != null) {
@@ -141,7 +141,7 @@ public class PlayerMethodPatches {
         public static void Postfix(AbstractPlayer _instance) {
 
             if (!(_instance instanceof AbstractPlayerWithMinions)) {
-                BasePlayerMinionHelper.changeMaxMinionAmount(_instance, PlayerAddFieldsPatch.f_baseMinions.get(_instance));
+                BasePlayerMinionHelper.changeMaxMinionAmount(_instance, PlayerAddSavableFieldsPatch.f_baseMinions.get(_instance));
                 BasePlayerMinionHelper.clearMinions(_instance);
             }
         }
@@ -157,13 +157,13 @@ public class PlayerMethodPatches {
         public static void Postfix(AbstractCreature _instance) {
             if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
                 BaseMod.logger.info("----------- Minion Before Attacking --------------");
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
                     monster.takeTurn();
                 });
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
                     monster.applyEndOfTurnTriggers();
                 });
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> {
                     monster.powers.forEach(power -> power.atEndOfRound());
                 });
             }
@@ -179,7 +179,7 @@ public class PlayerMethodPatches {
 
         public static void Postfix(AbstractCreature _instance) {
             if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyTurnPowers());
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyTurnPowers());
             }
         }
 
@@ -193,7 +193,7 @@ public class PlayerMethodPatches {
 
         public static void Postfix(AbstractCreature _instance) {
             if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPostDrawPowers());
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPostDrawPowers());
             }
         }
 
@@ -207,8 +207,8 @@ public class PlayerMethodPatches {
 
         public static void Postfix(AbstractCreature _instance) {
             if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPowers());
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.loseBlock());
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.applyStartOfTurnPowers());
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.loseBlock());
             }
         }
 
@@ -222,7 +222,7 @@ public class PlayerMethodPatches {
 
         public static void Postfix(AbstractCreature _instance) {
             if ((_instance instanceof AbstractPlayer) && !(_instance instanceof AbstractPlayerWithMinions)) {
-                PlayerAddFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.updatePowers());
+                PlayerAddSavableFieldsPatch.f_minions.get(AbstractDungeon.player).monsters.forEach(monster -> monster.updatePowers());
             }
         }
 
