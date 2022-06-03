@@ -7,11 +7,14 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import hlysine.friendlymonsters.utils.MinionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SpireInitializer
 public class FriendlyMonsters implements
         PostBattleSubscriber,
         EditKeywordsSubscriber {
+    public static final Logger logger = LogManager.getLogger(FriendlyMonsters.class);
 
     //Used by @SpireInitializer
     public static void initialize() {
@@ -30,7 +33,7 @@ public class FriendlyMonsters implements
 
     @Override
     public void receivePostBattle(AbstractRoom abstractRoom) {
-        BaseMod.logger.info("End of battle: Clearing players minions.");
+        logger.info("End of battle: Clearing players minions.");
         MinionUtils.clearMinions(AbstractDungeon.player);
     }
 

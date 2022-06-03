@@ -24,8 +24,8 @@ public class MinionUtils {
         return PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minionConfig.get(player).config.BaseMinionCount;
     }
 
-    public static void changeBaseMinionCount(AbstractPlayer player, int newMax) {
-        PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minionConfig.get(player).config.BaseMinionCount = newMax;
+    public static void setBaseMinionCount(AbstractPlayer player, int newBase) {
+        PlayerAddSavableFieldsPatch.PlayerAddFieldsPatch.fm_minionConfig.get(player).config.BaseMinionCount = newBase;
     }
 
     public static boolean addMinion(AbstractPlayer player, AbstractFriendlyMonster minionToAdd) {

@@ -42,7 +42,7 @@ public class MonsterIntentPatch {
             AbstractMonster.Intent _intent = __instance.intent;
             if (MinionUtils.hasMinions(AbstractDungeon.player)) {
                 if (MonsterIntentEnum.isMinionIntent(_intent) && MonsterIntentUtils.getTarget(__instance) == null) {
-                    AbstractFriendlyMonster target = (AbstractFriendlyMonster) MinionUtils.getRandomMinion(AbstractDungeon.player);
+                    AbstractFriendlyMonster target = (AbstractFriendlyMonster) MinionUtils.getRandomMinion(AbstractDungeon.player, true);
                     MonsterIntentUtils.setTarget(__instance, target);
                 }
             }

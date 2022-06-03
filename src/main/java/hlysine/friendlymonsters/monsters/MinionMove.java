@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.TipHelper;
+import hlysine.friendlymonsters.FriendlyMonsters;
 
 
 public class MinionMove extends ClickableUIElement {
@@ -32,7 +33,7 @@ public class MinionMove extends ClickableUIElement {
         if(moveActions != null) {
             moveActions.run();
         } else {
-            BaseMod.logger.info("MinionMove: " + this.ID + " had no actions!");
+            FriendlyMonsters.logger.info("MinionMove: " + this.ID + " had no actions!");
         }
     }
 

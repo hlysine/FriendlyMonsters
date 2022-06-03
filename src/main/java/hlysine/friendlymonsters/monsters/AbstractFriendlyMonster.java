@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.TintEffect;
-import hlysine.friendlymonsters.helpers.BasePlayerMinionHelper;
 
 public abstract class AbstractFriendlyMonster extends AbstractMonster {
 
@@ -68,18 +67,6 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster {
         super.applyEndOfTurnTriggers();
         this.takenTurn = false;
     }
-
-    @Override
-    public void die() {
-        if(!(AbstractDungeon.player instanceof AbstractPlayerWithMinions)){
-            BasePlayerMinionHelper.removeMinion(AbstractDungeon.player, this);
-        } else {
-            this.isDead = true;
-            ((AbstractPlayerWithMinions)AbstractDungeon.player).removeMinion(this);
-        }
-        super.die(false);
-    }
-
 
     public Texture[] getAttackIntents(){
         return this.attackIntents;
