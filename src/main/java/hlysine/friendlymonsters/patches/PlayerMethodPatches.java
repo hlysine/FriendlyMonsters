@@ -20,6 +20,7 @@ import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 import hlysine.friendlymonsters.utils.MinionUtils;
 import hlysine.friendlymonsters.utils.MonsterIntentUtils;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 public class PlayerMethodPatches {
@@ -194,6 +195,25 @@ public class PlayerMethodPatches {
             if (__instance instanceof AbstractPlayer) {
                 for (AbstractMonster minion : MinionUtils.getMinions(AbstractDungeon.player).monsters) {
                     minion.updatePowers();
+                }
+            }
+        }
+    }
+
+    @SpirePatch(
+            clz = AbstractPlayer.class,
+            method = "onVictory"
+    )
+    public static class OnVictoryPatch {
+        public static void Postfix(AbstractPlayer __instance) {
+            if (!__instance.isDead && !__instance.isDeadOrEscaped()) {
+                MonsterGroup minions = MinionUtils.getMinions(__instance);
+                ArrayList<AbstractMonster> monsters = minions.monsters;
+                for (int i = monsters.size() - 1; i >= 0; i--) {
+                    AbstractMonster monster = monsters.get(i);
+                    for (AbstractPower power : monster.powers) {
+                        power.onVictory();
+                    }
                 }
             }
         }
