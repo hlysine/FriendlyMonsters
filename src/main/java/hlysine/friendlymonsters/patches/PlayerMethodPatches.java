@@ -252,4 +252,28 @@ public class PlayerMethodPatches {
             }
         }
     }
+
+    @SpirePatch(
+            clz = UseCardAction.class,
+            method = SpirePatch.CONSTRUCTOR,
+            paramtypez = {
+                    AbstractCard.class,
+                    AbstractCreature.class
+            }
+    )
+    public static class OnUseCardPatch {
+        @SpireInsertPatch(
+                rloc = 16
+        )
+        public static void Insert(UseCardAction __instance, AbstractCard ___targetCard) {
+            MonsterGroup minions = MinionUtils.getMinions(AbstractDungeon.player);
+            for (AbstractMonster minion : minions.monsters) {
+                for (AbstractPower p : minion.powers) {
+                    if (!___targetCard.dontTriggerOnUseCard) {
+                        p.onUseCard(___targetCard, __instance);
+                    }
+                }
+            }
+        }
+    }
 }
