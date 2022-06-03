@@ -26,6 +26,7 @@ import hlysine.friendlymonsters.utils.MonsterIntentUtils;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 
 public class PlayerMethodPatches {
     @SpirePatch(
@@ -211,12 +212,12 @@ public class PlayerMethodPatches {
     public static class OnVictoryPatch {
         public static void Postfix(AbstractPlayer __instance) {
             if (!__instance.isDead && !__instance.isDeadOrEscaped()) {
-                MonsterGroup minions = MinionUtils.getMinions(__instance);
-                ArrayList<AbstractMonster> monsters = minions.monsters;
-                for (int i = monsters.size() - 1; i >= 0; i--) {
-                    AbstractMonster monster = monsters.get(i);
-                    for (AbstractPower power : monster.powers) {
-                        power.onVictory();
+                List<AbstractMonster> minions = new ArrayList<>(MinionUtils.getMinions(__instance).monsters);
+                for (AbstractMonster minion : minions) {
+                    if (MinionUtils.getMinions(__instance).monsters.contains(minion)) {
+                        for (AbstractPower power : minion.powers) {
+                            power.onVictory();
+                        }
                     }
                 }
             }
