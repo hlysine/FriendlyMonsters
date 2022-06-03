@@ -3,12 +3,10 @@ package hlysine.friendlymonsters.characters;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.AbstractAnimation;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
-import hlysine.friendlymonsters.patches.PlayerAddSavableFieldsPatch;
 import hlysine.friendlymonsters.utils.MinionUtils;
 
 public abstract class AbstractPlayerWithMinions extends CustomPlayer {
