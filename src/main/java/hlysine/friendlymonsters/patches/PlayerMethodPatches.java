@@ -276,4 +276,19 @@ public class PlayerMethodPatches {
             }
         }
     }
+
+    @SpirePatch(
+            clz = AbstractPlayer.class,
+            method = "playDeathAnimation"
+    )
+    public static class PlayDeathAnimationPatch {
+        public static void Postfix(AbstractPlayer __instance) {
+            MonsterGroup minions = MinionUtils.getMinions(__instance);
+            for (AbstractMonster monster : minions.monsters) {
+                if (monster instanceof AbstractFriendlyMonster) {
+                    ((AbstractFriendlyMonster) monster).playDeathAnimation();
+                }
+            }
+        }
+    }
 }
