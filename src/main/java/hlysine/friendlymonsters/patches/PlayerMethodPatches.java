@@ -1,10 +1,13 @@
 package hlysine.friendlymonsters.patches;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -228,6 +231,25 @@ public class PlayerMethodPatches {
         public static void Postfix(CardGroup __instance) {
             if (__instance.type == CardGroup.CardGroupType.HAND && AbstractDungeon.player != null)
                 MinionUtils.getMinions(AbstractDungeon.player).monsters.forEach(AbstractMonster::applyPowers);
+        }
+    }
+
+    @SpirePatch(
+            clz = UseCardAction.class,
+            method = "update"
+    )
+    public static class OnAfterUseCardPatch {
+        @SpireInsertPatch(
+                rloc = 7
+        )
+        public static void Insert(UseCardAction __instance, AbstractCard ___targetCard) {
+            for (AbstractMonster monster : MinionUtils.getMinions(AbstractDungeon.player).monsters) {
+                for (AbstractPower power : monster.powers) {
+                    if (!___targetCard.dontTriggerOnUseCard) {
+                        power.onAfterUseCard(___targetCard, __instance);
+                    }
+                }
+            }
         }
     }
 }
