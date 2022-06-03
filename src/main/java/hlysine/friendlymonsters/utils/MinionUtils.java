@@ -113,11 +113,11 @@ public class MinionUtils {
         if (minions.monsters.size() >= maxMinions) {
             return false;
         } else {
+            minions.add(minionToAdd);
             minionToAdd.init();
             minionToAdd.usePreBattleAction();
             // minionToAdd.useUniversalPreBattleAction(); // Friendly minions should not be affected by enemy blights
             minionToAdd.showHealthBar();
-            minions.add(minionToAdd);
             return true;
         }
     }
