@@ -5,8 +5,8 @@ Library for spawning friendly monsters in Modded Slay the Spire.
 This is a fork/complete rewrite of [Kobting/STSFriendlyMinions](https://github.com/Kobting/STSFriendlyMinions), aiming
 to fix all the issues, improve code quality and add important new features into the library.
 
-| **Steam Workshop** | **Download JAR** | **[Wiki](https://github.com/hlysine/FriendlyMonsters/wiki)** |
-|--------------------|------------------|--------------------------------------------------------------|
+| **[Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2816293692)** | **[Download JAR](https://github.com/hlysine/FriendlyMonsters/releases)** | **[Wiki](https://github.com/hlysine/FriendlyMonsters/wiki)** |
+|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------|
 
 # Features
 
