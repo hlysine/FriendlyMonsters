@@ -70,7 +70,7 @@ public class PlayerAddSavableFieldsPatch {
     }
 
     public static class PlayerMinionConfigSavable implements CustomSavable<PlayerMinionConfig> {
-        public PlayerMinionConfig config;
+        public PlayerMinionConfig config = new PlayerMinionConfig();
 
         @Override
         public PlayerMinionConfig onSave() {
@@ -79,7 +79,9 @@ public class PlayerAddSavableFieldsPatch {
 
         @Override
         public void onLoad(PlayerMinionConfig object) {
-            config = object;
+            FriendlyMonsters.logger.info("Player minion config loaded: " + object);
+            if (object != null)
+                config = object;
         }
     }
 }
