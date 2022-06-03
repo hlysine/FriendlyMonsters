@@ -5,6 +5,9 @@ Library for spawning friendly monsters in Modded Slay the Spire.
 This is a fork/complete rewrite of [Kobting/STSFriendlyMinions](https://github.com/Kobting/STSFriendlyMinions), aiming
 to fix all the issues, improve code quality and add important new features into the library.
 
+| **Steam Workshop** | **Download JAR** | **[Wiki](https://github.com/hlysine/FriendlyMonsters/wiki)** |
+|--------------------|------------------|--------------------------------------------------------------|
+
 # Features
 
 ## Comparison with Kobting/STSFriendlyMinions
@@ -25,8 +28,9 @@ to fix all the issues, improve code quality and add important new features into 
 | Sample monster card                                            |             ✅              |                 ❌ ‡                  |
 | Documentation                                                  |             ❌              |                  ✅                   |
 
-† Configurations include max minion count, the chance for enemy attacks to target minions, and the chance for powers to affect
-minions. Their default values are stored in the save file, but they can still be temporarily modified in each combat.
+† Configurations include max minion count, the chance for enemy attacks to target minions, and the chance for powers to
+affect minions. Their default values are stored in the save file, but they can still be temporarily modified in each
+combat.
 
 ‡ The sample monster card has been removed to not confuse players with a useless card.
 
