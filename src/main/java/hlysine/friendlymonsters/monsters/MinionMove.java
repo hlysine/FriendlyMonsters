@@ -17,6 +17,15 @@ public class MinionMove extends ClickableUIElement {
     public final Runnable moveActions;
     public final AbstractFriendlyMonster owner;
 
+    /**
+     * Create a new {@link MinionMove} instance.
+     *
+     * @param ID              The unique ID of this move.
+     * @param owner           The minion that this move belongs to.
+     * @param moveImage       The image to show next to the minion for the player to choose this move.
+     * @param moveDescription The description that shows when the user hovers over this move.
+     * @param moveActions     The action to execute when this move is chosen.
+     */
     public MinionMove(String ID, AbstractFriendlyMonster owner, Texture moveImage, String moveDescription, Runnable moveActions) {
         super(moveImage, 0, 0, 96.0f, 96.0f);
         this.moveImage = moveImage;
