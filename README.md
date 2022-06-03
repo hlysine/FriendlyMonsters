@@ -7,7 +7,7 @@ to fix all the issues, improve code quality and add important new features into 
 
 # Features
 
-**Comparison with Kobting/STSFriendlyMinions**
+## Comparison with Kobting/STSFriendlyMinions
 
 | Feature                                                        | Kobting/STSFriendlyMinions |       hlysine/FriendlyMonsters       |
 |----------------------------------------------------------------|:--------------------------:|:------------------------------------:|
@@ -30,7 +30,7 @@ minions. Their default values are stored in the save file, but they can still be
 
 ‡ The sample monster card has been removed to not confuse players with a useless card.
 
-**Issues fixed**
+## Issues fixed
 
 - Calling `AbstractFriendlyMonster.die()` in `takeTurn` crashes due to concurrent modification.
 - Power redirect not working properly.
