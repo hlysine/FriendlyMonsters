@@ -42,5 +42,4 @@ public class FriendlyMonsters implements
         String[] minionKeyword = new String[]{"minion", "minions"};
         BaseMod.addKeyword(minionKeyword, "A friendly monster that fights for you and has a chance to receive #yVulnerable, #yWeak, #yFrail, or #yStrength loss instead of you.");
     }
-
 }
