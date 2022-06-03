@@ -5,6 +5,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -216,6 +217,17 @@ public class PlayerMethodPatches {
                     }
                 }
             }
+        }
+    }
+
+    @SpirePatch(
+            clz = CardGroup.class,
+            method = "applyPowers"
+    )
+    public static class CardGroupApplyPowerPatch {
+        public static void Postfix(CardGroup __instance) {
+            if (__instance.type == CardGroup.CardGroupType.HAND && AbstractDungeon.player != null)
+                MinionUtils.getMinions(AbstractDungeon.player).monsters.forEach(AbstractMonster::applyPowers);
         }
     }
 }
