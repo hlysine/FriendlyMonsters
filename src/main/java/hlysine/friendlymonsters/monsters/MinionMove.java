@@ -1,6 +1,5 @@
 package hlysine.friendlymonsters.monsters;
 
-import basemod.BaseMod;
 import basemod.ClickableUIElement;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,14 +10,12 @@ import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import hlysine.friendlymonsters.FriendlyMonsters;
 
-
 public class MinionMove extends ClickableUIElement {
-
-    private String ID;
+    private final String ID;
     private String moveDescription;
     private Texture moveImage;
-    private Runnable moveActions;
-    private AbstractFriendlyMonster owner;
+    public final Runnable moveActions;
+    public final AbstractFriendlyMonster owner;
 
     public MinionMove(String ID, AbstractFriendlyMonster owner, Texture moveImage, String moveDescription, Runnable moveActions) {
         super(moveImage, 0, 0, 96.0f, 96.0f);
@@ -30,7 +27,7 @@ public class MinionMove extends ClickableUIElement {
     }
 
     private void doMove() {
-        if(moveActions != null) {
+        if (moveActions != null) {
             moveActions.run();
         } else {
             FriendlyMonsters.logger.info("MinionMove: " + this.ID + " had no actions!");
@@ -41,20 +38,24 @@ public class MinionMove extends ClickableUIElement {
         return this.hitbox;
     }
 
-    public Texture getMoveImage(){
-        return this.moveImage;
-    }
-
-    public void setMoveImage(Texture moveImage){
-        this.moveImage = moveImage;
-    }
-
-    public String getID(){
+    public String getID() {
         return this.ID;
     }
 
-    public String getMoveDescription(){
+    public Texture getMoveImage() {
+        return this.moveImage;
+    }
+
+    public void setMoveImage(Texture moveImage) {
+        this.moveImage = moveImage;
+    }
+
+    public String getMoveDescription() {
         return this.moveDescription;
+    }
+
+    public void setMoveDescription(String newDescription) {
+        this.moveDescription = newDescription;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class MinionMove extends ClickableUIElement {
 
     @Override
     protected void onClick() {
-        if(!AbstractDungeon.actionManager.turnHasEnded && !this.owner.hasTakenTurn()){
+        if (!AbstractDungeon.actionManager.turnHasEnded && !this.owner.hasTakenTurn()) {
             this.owner.setTakenTurn(true);
             this.doMove();
         }
@@ -77,11 +78,10 @@ public class MinionMove extends ClickableUIElement {
 
     @Override
     public void render(SpriteBatch sb) {
-        if(AbstractDungeon.actionManager.turnHasEnded || this.owner.hasTakenTurn()){
+        if (AbstractDungeon.actionManager.turnHasEnded || this.owner.hasTakenTurn()) {
             super.render(sb, Color.GRAY);
         } else {
             super.render(sb);
         }
-
     }
 }

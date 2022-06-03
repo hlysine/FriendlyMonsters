@@ -1,44 +1,37 @@
 package hlysine.friendlymonsters.monsters;
 
-import com.megacrit.cardcrawl.core.Settings;
-import hlysine.friendlymonsters.characters.AbstractPlayerWithMinions;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.vfx.TintEffect;
 
 public abstract class AbstractFriendlyMonster extends AbstractMonster {
-
     protected MinionMoveGroup moves;
     protected Texture[] attackIntents;
     private boolean takenTurn = false;
 
-    public AbstractFriendlyMonster(String name, String id, int maxHealth,float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY){
+    public AbstractFriendlyMonster(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY) {
         super(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, null, offsetX, offsetY);
-        if(imgUrl != null) {
+        if (imgUrl != null) {
             this.img = new Texture(imgUrl);
         }
-        this.tint = new TintEffect();
         moves = new MinionMoveGroup(this.drawX - 15.0f * Settings.scale, this.drawY - 15 * Settings.scale);
-
     }
 
-    public AbstractFriendlyMonster(String name, String id, int maxHealth,float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY, Texture[] attackIntents){
+    public AbstractFriendlyMonster(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY, Texture[] attackIntents) {
         this(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, imgUrl, offsetX, offsetY);
         this.attackIntents = attackIntents;
     }
 
-
-    public void addMove(MinionMove move){
+    public void addMove(MinionMove move) {
         moves.addMove(move);
     }
 
-    public void removeMove(String id){
+    public void removeMove(String id) {
         moves.removeMove(id);
     }
 
-    public MinionMoveGroup getMoves(){
+    public MinionMoveGroup getMoves() {
         return this.moves;
     }
 
@@ -46,7 +39,7 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster {
         this.moves = moves;
     }
 
-    public void clearMoves(){
+    public void clearMoves() {
         this.moves.clearMoves();
     }
 
@@ -68,14 +61,14 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster {
         this.takenTurn = false;
     }
 
-    public Texture[] getAttackIntents(){
+    public Texture[] getAttackIntents() {
         return this.attackIntents;
     }
 
     @Override
     public void update() {
         super.update();
-        if(!this.takenTurn){
+        if (!this.takenTurn) {
             moves.update();
         }
     }
@@ -83,18 +76,19 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster {
     @Override
     public void render(SpriteBatch sb) {
         super.render(sb);
-        if(!this.takenTurn){
+        if (!this.takenTurn) {
             moves.render(sb);
         }
-
     }
 
-    //Overriding these to make them not show up when extended as they aren't used by minions
+    //Overriding these to make them optional when extended as they aren't used by minions
     @Override
-    public void takeTurn() {}
-    @Override
-    protected void getMove(int i) {}
+    public void takeTurn() {
+    }
 
+    @Override
+    protected void getMove(int i) {
+    }
 }
 
 
