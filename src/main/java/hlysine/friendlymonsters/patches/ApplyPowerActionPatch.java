@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.*;
-import hlysine.friendlymonsters.MinionConfig;
 import hlysine.friendlymonsters.monsters.AbstractFriendlyMonster;
 import hlysine.friendlymonsters.utils.MinionUtils;
 
@@ -39,12 +38,12 @@ public class ApplyPowerActionPatch {
         if (!MinionUtils.hasMinions(AbstractDungeon.player)) {
             return SpireReturn.Continue();
         }
-        if (!MinionConfig.ShouldRedirectPower()) {
+        if (!MinionUtils.ShouldRedirectPower(AbstractDungeon.player)) {
             return SpireReturn.Continue();
         }
 
         applyPowerAction.isDone = true;
-        AbstractMonster newTarget = MinionUtils.getRandomMinion(AbstractDungeon.player);
+        AbstractMonster newTarget = MinionUtils.getRandomMinion(AbstractDungeon.player, true);
         powerToApply.owner = newTarget;
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(newTarget, source, powerToApply, stackAmount, isFast, effect));
         return SpireReturn.Return();

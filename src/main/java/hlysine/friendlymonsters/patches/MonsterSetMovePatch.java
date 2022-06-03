@@ -5,7 +5,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
-import hlysine.friendlymonsters.MinionConfig;
 import hlysine.friendlymonsters.enums.MonsterIntentEnum;
 import hlysine.friendlymonsters.utils.MinionUtils;
 import hlysine.friendlymonsters.utils.MonsterIntentUtils;
@@ -39,7 +38,7 @@ public class MonsterSetMovePatch {
     private static void maybeChangeIntent(AbstractMonster monster, AbstractMonster.Intent possibleNewIntent, byte nextMove, int intentBaseDmg, int multiplier, boolean isMultiDamage) {
         System.out.println("--------- Maybe Change Intent -----------");
 
-        if (MinionConfig.ShouldRedirectAttack()) {
+        if (MinionUtils.ShouldRedirectAttack(AbstractDungeon.player)) {
             System.out.println("-------- Changing Intent -----------");
 
             EnemyMoveInfo newInfo = new EnemyMoveInfo(nextMove, possibleNewIntent, intentBaseDmg, multiplier, isMultiDamage);

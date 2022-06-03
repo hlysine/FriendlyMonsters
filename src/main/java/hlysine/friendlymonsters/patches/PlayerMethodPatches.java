@@ -106,6 +106,8 @@ public class PlayerMethodPatches {
     public static class PreBattlePatch {
         public static void Postfix(AbstractPlayer __instance) {
             MinionUtils.setMaxMinionCount(__instance, MinionUtils.getBaseMinionCount(__instance));
+            MinionUtils.setMinionPowerChance(__instance, MinionUtils.getBaseMinionPowerChance(__instance));
+            MinionUtils.setMinionAttackTargetChance(__instance, MinionUtils.getBaseMinionAttackTargetChance(__instance));
             MinionUtils.clearMinions(__instance);
         }
     }
