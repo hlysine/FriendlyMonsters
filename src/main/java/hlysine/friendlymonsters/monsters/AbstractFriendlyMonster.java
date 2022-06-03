@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -127,6 +128,39 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
 
     @Override
     protected void getMove(int i) {
+    }
+
+    @Override
+    public void die() {
+        die(true);
+    }
+
+    /**
+     * Kill this minion and play the death animation.
+     *
+     * @param triggerPowers Whether to trigger powers of the minion.
+     */
+    @Override
+    public void die(boolean triggerPowers) {
+        // Override AbstractMonster to avoid trigger relics and changing stats
+        if (!this.isDying) {
+            this.isDying = true;
+            if (this.currentHealth <= 0 && triggerPowers) {
+                for (AbstractPower p : this.powers) {
+                    p.onDeath();
+                }
+            }
+
+            if (this.currentHealth < 0) {
+                this.currentHealth = 0;
+            }
+
+            if (!Settings.FAST_MODE) {
+                this.deathTimer += 1.8f;
+            } else {
+                this.deathTimer += 1f;
+            }
+        }
     }
 
     protected void loadAnimation(AbstractAnimation animation) {
