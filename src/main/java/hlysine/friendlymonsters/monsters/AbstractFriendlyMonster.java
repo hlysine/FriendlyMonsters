@@ -15,6 +15,7 @@ import com.esotericsoftware.spine.AnimationStateData;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import java.lang.invoke.MethodHandle;
@@ -42,6 +43,9 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
     public float scale = 1.0f;
     public Texture corpseImg = null;
 
+    public float target_x;
+    public float target_y;
+
     protected MinionMoveGroup moves;
     protected Texture[] attackIntents;
     private boolean takenTurn = false;
@@ -56,6 +60,9 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
             this.img = new Texture(imgUrl);
         }
         moves = new MinionMoveGroup(this.drawX - 15.0f * Settings.scale, this.drawY - 15 * Settings.scale);
+
+        target_x = drawX;
+        target_y = drawY;
     }
 
     public AbstractFriendlyMonster(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY, Texture[] attackIntents) {
@@ -93,6 +100,14 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
 
     public boolean hasTakenTurn() {
         return takenTurn;
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    @Override
+    public void updateAnimations() {
+        this.drawX = MathHelper.orbLerpSnap(this.drawX, this.target_x);
+        this.drawY = MathHelper.orbLerpSnap(this.drawY, this.target_y);
+        super.updateAnimations();
     }
 
     @Override
