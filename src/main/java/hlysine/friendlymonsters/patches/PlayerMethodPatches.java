@@ -76,12 +76,10 @@ public class PlayerMethodPatches {
     )
     public static class RenderPatch {
         public static void Prefix(AbstractPlayer __instance, SpriteBatch sb) {
-            if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
-                if (AbstractDungeon.getCurrRoom() != null) {
-                    if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                        MonsterGroup minions = MinionUtils.getMinions(AbstractDungeon.player);
-                        minions.render(sb);
-                    }
+            if (AbstractDungeon.getCurrRoom() != null) {
+                if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+                    MonsterGroup minions = MinionUtils.getMinions(AbstractDungeon.player);
+                    minions.render(sb);
                 }
             }
         }
@@ -94,12 +92,10 @@ public class PlayerMethodPatches {
     public static class UpdatePatch {
         public static void Postfix() {
             if (AbstractDungeon.getCurrRoom() != null) {
-                if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
-                    if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                        MonsterGroup minions = MinionUtils.getMinions(AbstractDungeon.player);
-                        minions.update();
-                        minions.monsters.removeIf(minion -> minion.isDead);
-                    }
+                if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+                    MonsterGroup minions = MinionUtils.getMinions(AbstractDungeon.player);
+                    minions.update();
+                    minions.monsters.removeIf(minion -> minion.isDead);
                 }
             }
         }
