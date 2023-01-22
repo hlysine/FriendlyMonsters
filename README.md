@@ -41,3 +41,4 @@ combat.
 - Minion logic not matching between `AbstractPlayerWithMinions` and base game characters.
 - Unoptimized reflection calls.
 - Outdated STS, MTS and Basemod versions.
+- Minions not updated/rendered in event combats.
