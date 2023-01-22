@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0] - Custom Power Tips - 2023-01-22
+
+### Minions
+
+- Added hook for custom power tips in minions
+
+### Misc
+
+- Updated dependencies
+
 ## [1.0.1] - Event Combat Fix - 2022-06-14
 
 ### Minions
