@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>friendlymonsters</groupId>
     <artifactId>FriendlyMonsters</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>FriendlyMonsters</name>
@@ -13,8 +13,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <SlayTheSpire.version>03-07-2022</SlayTheSpire.version>
-        <ModTheSpire.version>3.27.0</ModTheSpire.version>
+        <SlayTheSpire.version>12-18-2022</SlayTheSpire.version>
+        <ModTheSpire.version>3.30.2</ModTheSpire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <Dependencies.path>D:\Games\SteamLibrary\steamapps\workshop\content\646570</Dependencies.path>
         <Game.path>D:\Games\SteamLibrary\steamapps\common\SlayTheSpire</Game.path>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>basemod</groupId>
             <artifactId>basemod</artifactId>
-            <version>5.41.0</version>
+            <version>5.48.0</version>
             <scope>system</scope>
             <systemPath>${Dependencies.path}\1605833019\BaseMod.jar</systemPath>
         </dependency>

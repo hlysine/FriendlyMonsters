@@ -16,12 +16,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.MathHelper;
+import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public abstract class AbstractFriendlyMonster extends AbstractMonster implements ModelRenderSubscriber {
     private final static MethodHandle renderNameHandle;
@@ -147,6 +149,15 @@ public abstract class AbstractFriendlyMonster extends AbstractMonster implements
     public void applyEndOfTurnTriggers() {
         super.applyEndOfTurnTriggers();
         this.takenTurn = false;
+    }
+
+    /**
+     * Render custom tips for this minion.
+     *
+     * @param sb   The SpriteBatch to render to.
+     * @param tips The list of existing tips to render, including intent tip and power tips. Add to this list to render custom tips.
+     */
+    public void renderCustomTips(SpriteBatch sb, ArrayList<PowerTip> tips) {
     }
 
     public Texture[] getAttackIntents() {
