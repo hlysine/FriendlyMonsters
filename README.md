@@ -23,6 +23,7 @@ to fix all the issues, improve code quality and add important new features into 
 | Animated minions                                               |             ❌              |                  ✅                   |
 | Minion death animation (when player dies)                      |             ❌              |                  ✅                   |
 | Smooth minion movement                                         |             ❌              |                  ✅                   |
+| Custom power tips                                              |             ❌              |                  ✅                   |
 | Minion triggers                                                |     ✅<br/>(7 triggers)     |         ✅<br/>(12 triggers)          |
 | Unified API between base game characters and custom characters |             ❌              |                  ✅                   |
 | Sample monster card                                            |             ✅              |                 ❌ ‡                  |
